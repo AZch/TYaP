@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c0e601c8-ff53-4f3e-89e1-755e0af4a05f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TYaP_3/Constants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TYaP_3/Constants.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TYaP_3/LL1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TYaP_3/LL1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TYaP_3/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TYaP_3/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PrecedenceAnalyz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PrecedenceAnalyz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ScanerPR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScanerPR.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,6 +38,7 @@
           <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.30" value="1" />
           <entry key="project.open.time.38" value="1" />
+          <entry key="project.open.time.44" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.52" value="1" />
           <entry key="project.open.time.55" value="1" />
@@ -43,31 +49,31 @@
           <entry key="project.open.time.83" value="1" />
           <entry key="project.open.time.84" value="1" />
           <entry key="project.open.time.86" value="1" />
-          <entry key="project.opened" value="20" />
+          <entry key="project.opened" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="21" />
+          <entry key="java" value="22" />
           <entry key="txt" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="21" />
+          <entry key="JAVA" value="22" />
           <entry key="PLAIN_TEXT" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="4" />
-          <entry key="java" value="34616" />
+          <entry key="java" value="39393" />
           <entry key="txt" value="657" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="34616" />
+          <entry key="JAVA" value="39393" />
           <entry key="PLAIN_TEXT" value="661" />
         </counts>
       </usages-collector>
@@ -82,14 +88,23 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/PrecedenceAnalyz.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="91" column="50" lean-forward="true" selection-start-line="91" selection-start-column="50" selection-end-line="91" selection-end-column="50" />
+            <state relative-caret-position="712">
+              <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
               <folding>
-                <marker date="1544202102633" expanded="true" signature="6022:9131" ph="..." />
-                <marker date="1544202102633" expanded="true" signature="9230:14579" ph="..." />
-                <marker date="1544202102633" expanded="true" signature="14737:18036" ph="..." />
-                <marker date="1544202102633" expanded="true" signature="18162:22071" ph="..." />
+                <marker date="1544353309949" expanded="true" signature="8805:15936" ph="..." />
+                <marker date="1544353309949" expanded="true" signature="22812:31003" ph="..." />
+                <marker date="1544353309949" expanded="true" signature="31700:37555" ph="..." />
+                <marker date="1544353309949" expanded="false" signature="38464:41778" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -97,8 +112,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ScanerPR.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2091">
-              <caret line="130" selection-start-line="130" selection-end-line="130" />
+            <state relative-caret-position="177">
+              <caret line="61" column="39" selection-start-line="61" selection-start-column="39" selection-end-line="61" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -106,8 +121,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1615">
-              <caret line="95" column="33" selection-start-line="95" selection-start-column="33" selection-end-line="95" selection-end-column="33" />
+            <state relative-caret-position="131">
+              <caret line="93" column="34" lean-forward="true" selection-start-line="93" selection-start-column="34" selection-end-line="93" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -150,6 +165,7 @@
       <find>assi</find>
       <find>PrintError</find>
       <find>SBO</find>
+      <find>END</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -169,9 +185,9 @@
         <option value="$PROJECT_DIR$/src/SemType.java" />
         <option value="$PROJECT_DIR$/src/Diagram.java" />
         <option value="$PROJECT_DIR$/src/Scaner.java" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/LL1.java" />
         <option value="$PROJECT_DIR$/src/Constants.java" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/ScanerPR.java" />
         <option value="$PROJECT_DIR$/src/PrecedenceAnalyz.java" />
       </list>
@@ -202,7 +218,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
@@ -220,6 +235,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -296,18 +312,19 @@
       <workItem from="1543493821766" duration="9120000" />
       <workItem from="1544062772097" duration="9405000" />
       <workItem from="1544159738641" duration="489000" />
-      <workItem from="1544185026994" duration="10019000" />
+      <workItem from="1544185026994" duration="21244000" />
+      <workItem from="1544330598532" duration="20750000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="160074000" />
+    <option name="totallyTimeSpent" value="192049000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09594883" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09701493" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -317,11 +334,11 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.34561214" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.55146265" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.34236187" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32936078" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.21668473" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
@@ -344,8 +361,48 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/PrecedenceAnalyz.java</url>
+          <line>55</line>
+          <properties />
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/PrecedenceAnalyz.java</url>
+          <line>381</line>
+          <properties />
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/PrecedenceAnalyz.java</url>
+          <line>62</line>
+          <properties />
+          <option name="timeStamp" value="128" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/PrecedenceAnalyz.java</url>
+          <line>245</line>
+          <properties />
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="debuggerHistoryManager">
     <expressions id="setValue">
+      <expression>
+        <expression-string>&quot;&gt;&quot;</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>&quot;&lt;=&quot;</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>50</expression-string>
         <language-id>JAVA</language-id>
@@ -378,13 +435,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="64" selection-start-line="8" selection-start-column="64" selection-end-line="8" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Diagram.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="10574">
@@ -413,30 +463,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PrecedenceAnalyz.java">
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="91" column="50" lean-forward="true" selection-start-line="91" selection-start-column="50" selection-end-line="91" selection-end-column="50" />
-          <folding>
-            <marker date="1544202102633" expanded="true" signature="6022:9131" ph="..." />
-            <marker date="1544202102633" expanded="true" signature="9230:14579" ph="..." />
-            <marker date="1544202102633" expanded="true" signature="14737:18036" ph="..." />
-            <marker date="1544202102633" expanded="true" signature="18162:22071" ph="..." />
-          </folding>
+        <state relative-caret-position="221">
+          <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ScanerPR.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2091">
-          <caret line="130" selection-start-line="130" selection-end-line="130" />
+        <state relative-caret-position="177">
+          <caret line="61" column="39" selection-start-line="61" selection-start-column="39" selection-end-line="61" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1615">
-          <caret line="95" column="33" selection-start-line="95" selection-start-column="33" selection-end-line="95" selection-end-column="33" />
+        <state relative-caret-position="131">
+          <caret line="93" column="34" lean-forward="true" selection-start-line="93" selection-start-column="34" selection-end-line="93" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PrecedenceAnalyz.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="712">
+          <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
+          <folding>
+            <marker date="1544353309949" expanded="true" signature="8805:15936" ph="..." />
+            <marker date="1544353309949" expanded="true" signature="22812:31003" ph="..." />
+            <marker date="1544353309949" expanded="true" signature="31700:37555" ph="..." />
+            <marker date="1544353309949" expanded="false" signature="38464:41778" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

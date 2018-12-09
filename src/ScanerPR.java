@@ -59,7 +59,7 @@ public class ScanerPR {
             }
             if (text[pointer] == '\0') {
                 lex[0] = '#';
-                return Constants.END;
+                return Constants.END_PR;
             }
             if (text[pointer] <= '9' && text[pointer] >= '0') { // цифра
                 LexResInd inRes =  processNum(lex, indexLex);

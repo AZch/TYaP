@@ -1,8 +1,10 @@
 public class Main {
     public static void main(String[] argv) {
-        Scaner scaner = new Scaner("C:\\Users\\anton\\Desktop\\input.txt");
-        LL1 ll1 = new LL1();
-        int resAnalise = ll1.LL1Analise(scaner);
+        ScanerPR scaner = new ScanerPR("C:\\Users\\anton\\Desktop\\input.txt");
+//        LL1 ll1 = new LL1();
+//        int resAnalise = ll1.LL1Analise(scaner);
+        PrecedenceAnalyz precedenceAnalyz = new PrecedenceAnalyz();
+        int resAnalise = precedenceAnalyz.analyz(scaner);
         if (resAnalise == 1) {
             System.out.println("Синтаксических ошибок не обнаружено");
         } else {
