@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] argv) {
-        ScanerPR scaner = new ScanerPR("C:\\Users\\anton\\Desktop\\input.txt");
+        ScanerPR scaner = new ScanerPR("C:\\Users\\anton\\Desktop\\input2.txt");
 //        LL1 ll1 = new LL1();
 //        int resAnalise = ll1.LL1Analise(scaner);
         PrecedenceAnalyz precedenceAnalyz = new PrecedenceAnalyz();

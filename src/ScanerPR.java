@@ -33,7 +33,7 @@ public class ScanerPR {
         } else {
             System.out.println("Ошибка: " + String.valueOf(error) + ". Неверный символ " + String.valueOf(nextLext) + "\n");
         }
-        //System.exit(0);
+        System.exit(0);
     }
 
     public int processScanner(char[] lex) {
@@ -280,6 +280,7 @@ public class ScanerPR {
         text[indexText++] = '\n';
         text[indexText] = '\0';
         finalLoad.close();
+        //System.exit(1);
     }
 
     ScanerPR(String nameFile) {
