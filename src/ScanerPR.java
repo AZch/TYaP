@@ -33,7 +33,7 @@ public class ScanerPR {
         } else {
             System.out.println("Ошибка: " + String.valueOf(error) + ". Неверный символ " + String.valueOf(nextLext) + "\n");
         }
-        //System.exit(0);
+        System.exit(0);
     }
 
     public int processScanner(char[] lex) {
@@ -59,7 +59,7 @@ public class ScanerPR {
             }
             if (text[pointer] == '\0') {
                 lex[0] = '#';
-                return Constants.END;
+                return Constants.END_PR;
             }
             if (text[pointer] <= '9' && text[pointer] >= '0') { // цифра
                 LexResInd inRes =  processNum(lex, indexLex);
@@ -280,6 +280,7 @@ public class ScanerPR {
         text[indexText++] = '\n';
         text[indexText] = '\0';
         finalLoad.close();
+        //System.exit(1);
     }
 
     ScanerPR(String nameFile) {
