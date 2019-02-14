@@ -263,7 +263,8 @@ public class Scaner {
     public void GetData(String nameFile) throws IOException {
         //BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
         File file = new File(nameFile);
-        BufferedReader finalLoad = new BufferedReader(new FileReader(file));
+        BufferedReader finalLoad = new BufferedReader(new InputStreamReader(
+                new FileInputStream(file), "UTF-8"));
         int symbol = finalLoad.read();
         int indexText = 0;
         while (symbol != -1) {

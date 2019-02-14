@@ -1,18 +1,18 @@
 public class Main {
     public static void main(String[] argv) {
-        ScanerPR scaner = new ScanerPR("C:\\Users\\anton\\Desktop\\input2.txt");
-//        LL1 ll1 = new LL1();
-//        int resAnalise = ll1.LL1Analise(scaner);
-        PrecedenceAnalyz precedenceAnalyz = new PrecedenceAnalyz();
-        int resAnalise = precedenceAnalyz.analyz(scaner);
-        if (resAnalise == 1) {
-            System.out.println("Синтаксических ошибок не обнаружено");
-        } else {
-            System.out.println("Синтаксические ошибки обнаружены");
-        }
-        //scaner = new Scaner("C:\\Users\\anton\\Desktop\\input.txt");
-        //Diagram diagram = new Diagram(scaner);
-        //diagram.PROG();
+//        ScanerPR scaner = new ScanerPR("/home/az/IdeaProjects/TYaP/src/input2.txt");
+////        LL1 ll1 = new LL1();
+////        int resAnalise = ll1.LL1Analise(scaner);
+//        PrecedenceAnalyz precedenceAnalyz = new PrecedenceAnalyz();
+//        int resAnalise = precedenceAnalyz.analyz(scaner);
+//        if (resAnalise == 1) {
+//            System.out.println("Синтаксических ошибок не обнаружено");
+//        } else {
+//            System.out.println("Синтаксические ошибки обнаружены");
+//        }
+        Scaner scaner = new Scaner("/home/az/IdeaProjects/TYaP/src/input.txt");
+        Diagram diagram = new Diagram(scaner);
+        diagram.PROG();
 
         char[] lex = new char[Constants.MAX_LEX];
         //int typeLex = scaner.processScanner(lex);
