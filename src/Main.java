@@ -1,3 +1,5 @@
+
+
 public class Main {
     public static void main(String[] argv) {
 //        ScanerPR scaner = new ScanerPR("/home/az/IdeaProjects/TYaP/src/input2.txt");
@@ -13,6 +15,7 @@ public class Main {
         Scaner scaner = new Scaner("/home/az/IdeaProjects/TYaP/src/input.txt");
         Diagram diagram = new Diagram(scaner);
         diagram.PROG();
+        System.out.println(diagram.makeReport());
 
         char[] lex = new char[Constants.MAX_LEX];
         //int typeLex = scaner.processScanner(lex);

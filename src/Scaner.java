@@ -30,7 +30,7 @@ public class Scaner {
         } else {
             System.out.println("Ошибка: " + String.valueOf(error) + ". Неверный символ " + String.valueOf(nextLext) + "\n");
         }
-        //System.exit(0);
+        System.exit(0);
     }
 
     public int processScanner(char[] lex) {

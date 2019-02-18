@@ -35,8 +35,12 @@ public class Tree {
 //        }
 //        return currVert;
 //    }
+    public VertTree getRoot() {
+        return root;
+    }
 
-    public void add(String id, int type, TableData tableData) {
+    public VertTree add(String id, int type, TableData tableData) {
+        VertTree saveVert = null;
          if (type == Constants.CURLY_BRACE_OPEN) {
             currVert.left = new VertTree(Constants.CURLY_BRACE_OPEN, "", currVert, null);
             currVert = currVert.left;
@@ -44,11 +48,13 @@ public class Tree {
             currVert = currVert.right;
         } else {
             currVert.left = new VertTree(type, id, currVert, tableData);
+            saveVert = currVert.left;
             currVert = currVert.left;
             if (linkVert != null) {
                 currVert.right = linkVert.right;
             }
         }
+        return saveVert;
     }
 
     private void upCurrToEmpty() {
@@ -80,9 +86,10 @@ public class Tree {
         return vertTree;
     }
 
-    public void findId(String id, Scaner scaner) {
+    public VertTree findId(String id, Scaner scaner) {
         if (!findAllUp(id))
             scaner.PrintError("Идентификатор не обнаружен".toCharArray(), id.toCharArray());
+        return findVertUp(id);
     }
 
     public void checkIndividualId(String id, Scaner scaner) {

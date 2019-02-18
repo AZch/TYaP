@@ -1,6 +1,10 @@
+import java.util.Vector;
+
 public class SemType {
     int type = 0;
     int typeData = 0;
+    String val;
+    Vector<Integer> positions = new Vector<>();
 
     public SemType(int type) {
         this.typeData = type;

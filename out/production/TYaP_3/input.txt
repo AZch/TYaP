@@ -1,23 +1,36 @@
 
 // sdfjh
 //bv.a=2;
+class cls {
+    int ab = 50;
+};
 
-void main() { 
-	int a = 3;//bv.sdf.b[11][100][45];
-	int aa[10];
-	aa[a] = 2;
+void main() {
+	int aa[3][2][3] = {{{11,14,17}, {1, 2, 3}}, {{12, 1, 2}, {4, 5, 6}}, {{13, 14, 15}, {16,17,18}}};
+	int a = 2;
+	aa[a][0][1] = 2;
+    char mmm = 'o';
+    cls bv;
+    int b = 2;
+    b = ((2 + 3) * 4 - 7 / (10 - 12));
+    int c = 4;
+    int d = 5;
+    int g = b * c - bv.ab;
+
+	//int a = 3;//bv.sdf.b[11][100][45];
 	//a = 5;
 	a = 6;
 	{int a, b;} {int a, b;}
-	int b;
-    //b = ((2 + 3) * 4 - 7 / (10 - 12) + 124 % 80);
 	//dsfg dsfas;
-	int c = 3 + 7;
+	c = 3 + 7;
 	char sdf = 'a';
 	//int a = (b + c);
+	a = 0;
     if (a) {
+        d = 89;
         if (6 && 8) {
             if ((a == b && a > c && b < a ) || b >= 6) {
+                c = 13;
             } else {
                 if (1) {
                 } else if (88) {
@@ -28,6 +41,7 @@ void main() {
             }
         }
     } else if (a || b) {
+        d = 14;
         int a = 6 + 7;
     }
 	//int a = fgh.a;
@@ -37,10 +51,10 @@ void main() {
 
 const int a = 66;
 class fgh {
-    int a = 4 + 'f' / 'c';
+    int a = 4 + 10 / 2;
     int c;
     char fg = 'j';
-    int b[12][123][124] = {{{1, 2}, {2}}, {{}}, {{}}}; 
+    //int b[12][123][124] = {{{1, 2}, {2}}, {{}}, {{}}};
 	fgh sdf;
 };
 

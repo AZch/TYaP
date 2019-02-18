@@ -1,6 +1,9 @@
+import java.util.Vector;
+
 public class Diagram {
     private Scaner scaner;
     private Tree tree;
+    private boolean flInterpr = true;
 
     public Diagram(Scaner scaner) {
         this.scaner = scaner;
@@ -116,8 +119,22 @@ public class Diagram {
             pointer = scaner.getPointer();
             type = scaner.processScanner(lex);
         }
-        int a;
-        a = 6;
+    }
+
+    private String getValTree(String res, VertTree vert) {
+        vert.isSee = true;
+        if (vert.val.size() != 0)
+            res += vert.getVal();
+        if (vert.left != null && !vert.left.isSee)
+            res = getValTree(res, vert.left);
+        if (vert.right != null && !vert.right.isSee)
+            res = getValTree(res, vert.right);
+        return res;
+    }
+
+    public String makeReport() {
+        String res = "";
+        return getValTree("", tree.getRoot());
     }
 
     private void DATA() {
@@ -143,9 +160,20 @@ public class Diagram {
             if (type != Constants.ID)
                 scaner.PrintError("Ожидался тип идентификатор ".toCharArray(), lex);
             tree.checkIndividualId(new String(lex), scaner);
-            tree.add(new String(lex), Constants.VARIABLE, new TableData(new String(lex), Constants.VARIABLE, new SemType(whatType)));
+            VertTree saveVert = tree.add(new String(lex), Constants.VARIABLE, new TableData(new String(lex), Constants.VARIABLE, new SemType(whatType)));
 
-            VARIABLE();
+            String retVal = VARIABLE();
+            if (retVal != "" && saveVert.measure.size() == 0 && flInterpr) {
+                saveVert.val.add(retVal);
+
+                System.out.println("name: " + saveVert.id);
+                System.out.println("data:\n" + saveVert.getVal());
+            }
+            if (saveVert.measure.size() == 0) {
+
+                System.out.println("name: " + saveVert.id);
+                System.out.println("data:\n" + saveVert.getVal());
+            }
             pointer = scaner.getPointer();
             type = scaner.processScanner(lex);
         } while (type == Constants.VIRGULE);
@@ -187,14 +215,16 @@ public class Diagram {
 
     }
 
-    private void VARIABLE() {
+    private String VARIABLE() {
         int pointer = scaner.getPointer();
         char[] lex = new char[Constants.MAX_LEX];
         int type = scaner.processScanner(lex);
+        String val = "";
         if (type == Constants.ASSIGN) {
-            EXPRESSION(1, tree.getCurrVert().tableData.countOfMeasur, tree.getCurrVert().tableData.typeData);
+            SemType resSemType = EXPRESSION(1, tree.getCurrVert().tableData.countOfMeasur, tree.getCurrVert().tableData.typeData, null, true);
             if (tree.getCurrVert().tableData.type != Constants.CONST)
                 tree.getCurrVert().tableData.isInit = true;
+            val = resSemType.val;
         } else if (type == Constants.SQUARE_BRACE_OPEN) {
             tree.getCurrVert().tableData.changeType(Constants.ARRAY);
             //scaner.setPointer(pointer);
@@ -207,6 +237,7 @@ public class Diagram {
                 //type = scaner.processScanner(lex);
                  // конста в числах, или идентификатор (хотя по идее здесь идентефикатор может быть не констаты)
                 SemType semType = A1(null);
+                tree.getCurrVert().measure.add(parseLex(semType.val.toCharArray()));
                 if (semType.type != Constants.VARIABLE)
                     scaner.PrintError("Ожидалась перменная или константа".toCharArray(), lex);
 //                if (type != Constants.TYPE_INT && type != Constants.TYPE_SINT /*&& type != Constants.ID && type != Constants.TYPE_CHAR*/)
@@ -228,15 +259,25 @@ public class Diagram {
                 type = scaner.processScanner(lex);
                 //
             } while (type == Constants.SQUARE_BRACE_OPEN);
+            tree.getCurrVert().fillVal();
             scaner.setPointer(pointer);
-            VARIABLE();
+            val = VARIABLE();
         } else
             scaner.setPointer(pointer);
+        return val;
+    }
 
+    private Vector<Integer> deepCopyMeasures(Vector<Integer> measures) {
+        if (measures == null) {
+            Vector<Integer> res = new Vector<>();
+            res.add(0);
+            return res;
+        }
+        return new Vector<>(measures);
     }
 
     // доп чек
-    private void EXPRESSION(int thisMeasure, int currMeasure, SemType semType) {
+    private SemType EXPRESSION(int thisMeasure, int currMeasure, SemType semType, Vector<Integer> measures, boolean isMayNextMeasure) {
         int pointer = scaner.getPointer();
         char[] lex = new char[Constants.MAX_LEX];
         int type = scaner.processScanner(lex);
@@ -244,15 +285,44 @@ public class Diagram {
         if (type == Constants.CURLY_BRACE_OPEN) {
             //tree.add("{", Constants.CURLY_BRACE_OPEN);
             do {
+                if (measures == null) {
+                    measures = new Vector<>();
+                }
+                if (measures.size() < thisMeasure) {
+                    measures.add(0);
+                } else {
+
+                    if (thisMeasure < measures.size() && isMayNextMeasure) {
+                        measures.set(thisMeasure - 1, measures.get(thisMeasure - 1) + 1);
+                        isMayNextMeasure = false;
+                    }
+                    for (int i = thisMeasure; i < measures.size(); i++)
+                        measures.set(i, 0);
+                }
+
+                //Vector<Integer> copy = deepCopyMeasures(measures);
                 if (thisMeasure > tree.getCurrVert().tableData.countOfMeasur)
                     scaner.PrintError("Слишком много измерений".toCharArray(), "-".toCharArray());
-                EXPRESSION(thisMeasure + 1, currMeasure, semType);
+                semType = EXPRESSION(thisMeasure + 1, currMeasure, semType, measures, isMayNextMeasure);
+                isMayNextMeasure = true;
+                if (measures.size() >= thisMeasure && thisMeasure == measures.size()) {
+                    if (flInterpr) {
+                        tree.getCurrVert().addVal(semType.val, measures, scaner);
+                    }
+                    measures.set(thisMeasure - 1, measures.get(thisMeasure - 1) + 1);
+                }
+                //measures.remove(measures.size() - 1);
+
+
+
+
                 pointer = scaner.getPointer();
                 type = scaner.processScanner(lex);
             } while (type == Constants.VIRGULE);
             //scaner.setPointer(pointer);
             if (type != Constants.CURLY_BRACE_CLOSE)
                 scaner.PrintError("Ожидалась } ".toCharArray(), lex);
+            return semType;
             //tree.add("{", Constants.CURLY_BRACE_CLOSE);
         } else {
             scaner.setPointer(pointer);
@@ -270,9 +340,10 @@ public class Diagram {
                     else if (semType.typeData != resSemType.typeData)
                         scaner.PrintError("Несоответствие типов".toCharArray(), lex);
                 }
+                return resSemType;
             }
         }
-
+        return null;
         //scaner.setPointer(pointer);
     }
 
@@ -282,26 +353,26 @@ public class Diagram {
         char[] lex = new char[Constants.MAX_LEX];
         int type = scaner.processScanner(lex);
         scaner.setPointer(pointer);
-
         if (type == Constants.IF) {
             IF();
         } else if (type == Constants.CURLY_BRACE_OPEN) {
             DESC_FUN();
         } else {
+            VertTree vert;
             SemType semType = null;
             do {
                 type = scaner.processScanner(lex);
                 if (type != Constants.ID)
                     scaner.PrintError("Ожидался идентификатор".toCharArray(), lex);
                 tree.findId(new String(lex), scaner);
-                VertTree vert = tree.findVertUp(new String(lex));
+                vert = tree.findVertUp(new String(lex));
                 if (vert.tableData.type == Constants.FUNCTION || vert.tableData.type == Constants.CLASS) {
                     scaner.PrintError("Не перменная а класс или функция".toCharArray(), lex);
                 }
                 if (vert.tableData.type == Constants.CONST)
                     scaner.PrintError("Переопредление константы недопустимо".toCharArray(), lex);
 
-                semType = ELEM_ARRAY(tree.findVertUp(new String(lex)), 0);
+                semType = ELEM_ARRAY(tree.findVertUp(new String(lex)), 0, null);
                 pointer = scaner.getPointer();
                 type = scaner.processScanner(lex);
             } while (type == Constants.DOT);
@@ -309,8 +380,18 @@ public class Diagram {
 
             if (type != Constants.ASSIGN)
                 scaner.PrintError("Ожидалось = ".toCharArray(), lex);
-            EXPRESSION(1, 1, semType);
+            SemType resSemType = EXPRESSION(1, 1, semType, null, true);
             type = scaner.processScanner(lex);
+            if (flInterpr) {
+                if (semType.positions.size() > 0)
+                    vert.addVal(resSemType.val, semType.positions, scaner);
+                else {
+                    vert.val.clear();
+                    vert.val.add(resSemType.val);
+                }
+                System.out.println("name: " + vert.id);
+                System.out.println("data:\n" + vert.getVal());
+            }
             if (type != Constants.COMMA)
                 scaner.PrintError("Ожидалась ; ".toCharArray(), lex);
         }
@@ -328,16 +409,44 @@ public class Diagram {
         type = scaner.processScanner(lex);
         if (type != Constants.ROUND_BRACE_OPEN)
             scaner.PrintError("Ожидалась ( ".toCharArray(), lex);
-        EXPRESSION(1, 1, new SemType(Constants.VARIABLE, Constants.INT));
+        SemType resSemType = EXPRESSION(1, 1, new SemType(Constants.VARIABLE, Constants.INT), null, true);
         type = scaner.processScanner(lex);
         if (type != Constants.ROUND_BRACE_CLOSE)
             scaner.PrintError("Ожидалась ) ".toCharArray(), lex);
+        boolean isChgFlInterpr = false;
+        if (flInterpr) {
+            isChgFlInterpr = true;
+            if (resSemType.val.equals("0"))
+                flInterpr = false;
+            else
+                flInterpr = true;
+        }
         OPERATOR();
+        if (isChgFlInterpr)
+            if (resSemType.val.equals("0"))
+                flInterpr = true;
+            else
+                flInterpr = false;
 
         pointer = scaner.getPointer();
         type = scaner.processScanner(lex);
-        if (type == Constants.ELSE)
+        if (type == Constants.ELSE) {
+            isChgFlInterpr = false;
+            if (flInterpr) {
+                isChgFlInterpr = true;
+                if (resSemType.val.equals("0"))
+                    flInterpr = true;
+                else
+                    flInterpr = false;
+            }
             OPERATOR();
+            if (isChgFlInterpr) {
+                if (resSemType.val.equals("0"))
+                    flInterpr = false;
+                else
+                    flInterpr = true;
+            }
+        }
         else
             scaner.setPointer(pointer);
 
@@ -397,18 +506,21 @@ public class Diagram {
     }
 
     // по идее полная пустота достигается. Тут есть вопрос
-    private SemType ELEM_ARRAY(VertTree lastVert, int countMeasure) {
+    private SemType ELEM_ARRAY(VertTree lastVert, int countMeasure, SemType prevSemType) {
         int pointer = scaner.getPointer();
         char[] lex = new char[Constants.MAX_LEX];
         int type = scaner.processScanner(lex);
         VertTree currVert = tree.getCurrVert();
         SemType retSemType = new SemType(Constants.VARIABLE, Constants.INT);
+        if (prevSemType != null)
+            retSemType.val = prevSemType.val;
 
         if (type == Constants.SQUARE_BRACE_OPEN || type == Constants.DOT) {
             if (type == Constants.SQUARE_BRACE_OPEN) {
                 do {
                     //type = scaner.processScanner(lex);
                     SemType semType = A1(null);
+                    retSemType.positions.add(parseLex(semType.val.toCharArray()));
                     if (semType.type != Constants.VARIABLE)
                         scaner.PrintError("Ожидалась перменная или константа".toCharArray(), lex);
 //                    if (type != Constants.TYPE_INT && type != Constants.TYPE_SINT /*&&
@@ -457,12 +569,15 @@ public class Diagram {
                 } while (type == Constants.DOT);
                 retSemType.typeData = lastVert.tableData.typeData.typeData;
                 retSemType.type = lastVert.tableData.typeData.type;
+                retSemType.val = lastVert.val.get(0);
                 scaner.setPointer(pointer);
             } else
                 scaner.setPointer(pointer);
-            retSemType = ELEM_ARRAY(lastVert, countMeasure);
+            retSemType = ELEM_ARRAY(lastVert, countMeasure, retSemType);
             tree.setCurrVert(currVert);
         } else {
+            if (prevSemType != null)
+                retSemType = prevSemType;
             if (lastVert != null && lastVert.right != null || (countMeasure + 1 != lastVert.tableData.countOfMeasur)) {
                 scaner.PrintError("Не простейшее выражение!".toCharArray(), lastVert.id.toCharArray());
             }
@@ -484,6 +599,13 @@ public class Diagram {
             SemType semType1 = new SemType(semType);
             semType1 = A2(semType1);
             semType = SemOrAndEqualMoreLess(semType, semType1);
+
+            if (type == Constants.OR)
+                if (parseLex(semType.val.toCharArray()) != 0 || parseLex(semType1.val.toCharArray()) != 0)
+                    semType.val = "1";
+                else
+                    semType.val = "0";
+
             pointer = scaner.getPointer();
             type = scaner.processScanner(lex);
         }
@@ -504,6 +626,13 @@ public class Diagram {
             SemType semType1 = new SemType(semType);
             semType1 = A3(semType1);
             semType = SemOrAndEqualMoreLess(semType, semType1);
+
+            if (type == Constants.AND)
+                if (parseLex(semType.val.toCharArray()) != 0 && parseLex(semType1.val.toCharArray()) != 0)
+                    semType.val = "1";
+                else
+                    semType.val = "0";
+
             pointer = scaner.getPointer();
             type = scaner.processScanner(lex);
         }
@@ -524,6 +653,13 @@ public class Diagram {
             SemType semType1 = new SemType(semType);
             semType1 = A4(semType1);
             semType = SemOrAndEqualMoreLess(semType, semType1);
+
+            if (type == Constants.EQUAL)
+                if (parseLex(semType.val.toCharArray()) == parseLex(semType1.val.toCharArray()))
+                    semType.val = "1";
+                else
+                    semType.val = "0";
+
             pointer = scaner.getPointer();
             type = scaner.processScanner(lex);
         }
@@ -545,6 +681,29 @@ public class Diagram {
             SemType semType1 = new SemType(semType);
             semType1 = A5(semType1);
             semType = SemOrAndEqualMoreLess(semType, semType1);
+
+            if (type == Constants.MORE)
+                if (parseLex(semType.val.toCharArray()) > parseLex(semType1.val.toCharArray()))
+                    semType.val = "1";
+                else
+                    semType.val = "0";
+            if (type == Constants.MORE_EQUAL)
+                if (parseLex(semType.val.toCharArray()) >= parseLex(semType1.val.toCharArray()))
+                    semType.val = "1";
+                else
+                    semType.val = "0";
+            if (type == Constants.LESS)
+                if (parseLex(semType.val.toCharArray()) < parseLex(semType1.val.toCharArray()))
+                    semType.val = "1";
+                else
+                    semType.val = "0";
+            if (type == Constants.LESS_EQUAL)
+                if (parseLex(semType.val.toCharArray()) <= parseLex(semType1.val.toCharArray()))
+                    semType.val = "1";
+                else
+                    semType.val = "0";
+
+
             pointer = scaner.getPointer();
             type = scaner.processScanner(lex);
         }
@@ -565,6 +724,12 @@ public class Diagram {
             SemType semType1 = new SemType(semType);
             semType1 = A6(semType1);
             semType = SemPlusMinus(semType, semType1);
+
+            if (type == Constants.PLUS)
+                semType.val = String.valueOf(parseLex(semType.val.toCharArray()) + parseLex(semType1.val.toCharArray()));
+            else
+                semType.val = String.valueOf(parseLex(semType.val.toCharArray()) - parseLex(semType1.val.toCharArray()));
+
             pointer = scaner.getPointer();
             type = scaner.processScanner(lex);
         }
@@ -588,6 +753,12 @@ public class Diagram {
                 semType = SemPercent(semType, semType1);
             else
                 semType = SemMultDiv(semType, semType1);
+            if (type == Constants.SLASH)
+                semType.val = String.valueOf(parseLex(semType.val.toCharArray()) / parseLex(semType1.val.toCharArray()));
+            else if (type == Constants.STAR)
+                semType.val = String.valueOf(parseLex(semType.val.toCharArray()) * parseLex(semType1.val.toCharArray()));
+            else
+                semType.val = String.valueOf(parseLex(semType.val.toCharArray()) % parseLex(semType1.val.toCharArray()));
             pointer = scaner.getPointer();
             type = scaner.processScanner(lex);
         }
@@ -618,9 +789,10 @@ public class Diagram {
 
                 if (type != Constants.ID)
                     scaner.PrintError("Ожидался идентификатор".toCharArray(), lex);
-                tree.findId(new String(lex), scaner);
-
-                semType = ELEM_ARRAY(tree.findVertUp(new String(lex)), 0);
+                VertTree vert = tree.findId(new String(lex), scaner);
+                semType = ELEM_ARRAY(tree.findVertUp(new String(lex)), 0, null);
+                if (semType.val == null)
+                    semType.val = vert.val.get(0);
 
                 pointer = scaner.getPointer();
                 type = scaner.processScanner(lex);
@@ -633,10 +805,52 @@ public class Diagram {
                 semType = new SemType(Constants.VARIABLE, Constants.INT);
             else
                 semType = new SemType(Constants.VARIABLE, Constants.CHAR);
+            semType.val = parseLexString(lex);
             return semType;
         }
         scaner.setPointer(pointer);
         return semType;
+    }
+
+    private String parseLexString(char[] lex) {
+        int i = 0;
+        int num = 0;
+        String strNum = "";
+        while (i < lex.length && lex[i] != '\0') {
+
+            try {
+                num = Integer.parseInt(String.valueOf(lex[i]));
+            } catch (Exception e) {
+                num = lex[i];
+            }
+            strNum += String.valueOf(num);
+            i++;
+        }
+        return strNum;
+    }
+
+    private int parseLex(char[] lex) {
+        int i = 0;
+        int num = 0;
+        boolean isMinus = false;
+        String strNum = "";
+        while (i < lex.length && lex[i] != '\0') {
+
+            try {
+                num = Integer.parseInt(String.valueOf(lex[i]));
+            } catch (Exception e) {
+                if (lex[i] == '-')
+                    isMinus = true;
+                else
+                    num = lex[i];
+            }
+            strNum += String.valueOf(num);
+            i++;
+        }
+        if (isMinus)
+            return -Integer.parseInt(strNum);
+        else
+            return Integer.parseInt(strNum);
     }
 
     private SemType SemOrAndEqualMoreLess(SemType firstType, SemType secondType) {
