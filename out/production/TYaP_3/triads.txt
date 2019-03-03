@@ -1,0 +1,86 @@
+DATA -> TYPE ALL_DATA ;
+TYPE -> int | char | id
+ALL_DATA -> IDENT VARIABLE NEXT_DATA
+NEXT_DATA -> , IDENT VARIABLE NEXT_DATA | e
+PROG -> DATA PROG | void main () DESC_FUN PROG | CONST PROG | class id { CLASS_DESC } PROG | e
+VARIABLE -> [ A1 ] NEXT_SQUARE_DATA VARIABLE | = EXPRESSION | e
+
+1) int global.globalPerem
+2) = global.globalPerem 40
+2.1) int global.secPeremennia
+
+3) int asd.aVar
+4) char asd.perem 1
+
+5) fun main 16 (count byte)
+6) int main.aMain
+7) = 6) 4
+8) int main.bMain 
+8.1) + 5 3
+8.2) * 8.1) 4
+8.3) = 8) 8.2)
+9) int main.gMain
+10) char main.charMainPerem
+11) = 10) int('c')
+12) char main.chairUnres;
+13) > aMain bMain
+14) if 15) 21)
+15) int main.if.a 4
+16) * main.aMain main.bMain
+17) = 15) 16)
+18) - main.if.a 1
+19) = 15) 19)
+20) go 26)
+21) int main.else.b 4
+22) * main.bMain 10
+23) = 21) 22)
+24) + main.else.b 11
+25) = 21) 24)
+26) char afterRes 
+27) = 26) 'a'
+28) = 26) 'm'
+28.1) int main...aMain
+28.2) 
+29) fun main end
+
+
+
+
+NEXT_SQUARE_DATA -> [ A1 ] NEXT_SQUARE_DATA | e
+EXPESSION -> A1 | { MANY_EXPRESSION }
+MANY_EXPRESSION -> EXPRESSION NEXT_MANY_EXPRESSION
+NEXT_MANY_EXPRESSION -> , EXPRESSION NEXT_MANY_EXPRESSION | e
+OPERATOR -> DESC_FUN | IF | id ELEM_ARRAY NEXT_ELEM = EXPRESSION ;
+IF -> if ( EXPRESSION ) OPERATOR MAY_ELSE
+    t(IF) -> t(if) t('(') t(EXPRESSION) t(')') t(OPERATOR) t(MAY_ELSE) (или d4)
+MAY_ELSE -> else OPERATOR | e 
+
+
+
+t(DATA) -> {
+    t(TYPE) -> просто получить тип
+    t(ALL_DATA)
+    t(';') -> e
+}
+
+t(ALL_DATA) -> {
+    t(id) -> type id countByte (int aVar 4)
+    t(VARIABLE)
+    t(ALL_DATA) -> не  e, пока есть какие то данные	
+}
+t(VARIABLE) -> {
+}
+
+Void main  () {
+}
+
+t(main) -> {
+1)	fun main
+2)	deltaDESC_FUN
+3)	end main
+}
+deltaDESC_FUN -> {
+    t(DATA)
+    t(IF)
+}
+ 

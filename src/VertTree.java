@@ -47,7 +47,10 @@ public class VertTree {
             res += ")\n";
         res += "value " + id + ":\n";
         for (int i = 0; i < val.size(); i++)
-            res += val.get(i) + " ";
+            if (val.get(i) == "")
+                res += ". ";
+            else
+                res += val.get(i) + " ";
         return res + "\n";
     }
 
@@ -59,16 +62,6 @@ public class VertTree {
                 mult *= this.measure.get(l);
             bias += mult * measureIndex.get(k);
         }
-
-//        for (int i = this.measure.size() - 1; i >= 0 ; i--) {
-//            bias +=
-//        }
-//        for (int i = 0; i < this.measure.size(); i++) {
-//            if (measureIndex.get(i) >= measure.get(i)) {
-//                scaner.PrintError("Выход за пределы массива".toCharArray(), val.toCharArray());
-//            }
-//            bias += Math.pow(this.measure.get(i), i) * measureIndex.get(this.measure.size() - (i + 1));
-//        }
         this.val.set(bias, val);
         int a;
         a = 6;

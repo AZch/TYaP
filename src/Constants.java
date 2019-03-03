@@ -86,6 +86,29 @@ public class Constants {
     public static final int netermA6_ = 41000;
     public static final int netermA7 = 42000;
 
+    public static final String deltaDescFun = "DESC_FUN";
+    public static final int deltaNum = 50000;
+    public static final int deltaRoundBraceClose = 51000;
+    public static final int deltaRoundBraceOpen = 52000;
+    public static final int deltaOperation = 53000;
+    public static final int deltaEndAssign = 54000;
+    public static final int deltaEndMain = 55000;
+    public static final int deltaInitClass = 56000;
+    public static final int deltaClearPrefix = 57000;
+    public static final int deltaId = 58000;
+    public static final int deltaResumInit = 59000;
+    public static final int deltaAddPrefixIf = 60000;
+    public static final int deltaAddPrefixDot = 61000;
+    public static final int deltaRemoveDot = 62000;
+    public static final int deltaRemovePrefixIf = 63000;
+    public static final int deltaAddJmpToElse = 64000;
+    public static final int deltaJumpAfterIf = 65000;
+    public static final int deltaPlaceJmp = 66000;
+    public static final int deltaJumpAfterIfWithAddGo = 67000;
+    public static final int deltaJumpAfterIfWithElse = 68000;
+    public static final int deltaAddPrefixElse = 69000;
+    public static final int deltaRemoveElse = 70000;
+
 
     static final int CLASS_PR = 0;
     static final int ID_PR = 1;
@@ -114,6 +137,9 @@ public class Constants {
     static final int IF_PR = 24;
     static final int ELSE_PR = 25;
     static final int END_PR = 26;
+
+    public static final int sizeInt = 4;
+    public static final char sizeChar = 1;
 
 
 }
