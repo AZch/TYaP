@@ -95,7 +95,9 @@ public class Constants {
     public static final int deltaEndMain = 55000;
     public static final int deltaInitClass = 56000;
     public static final int deltaClearPrefix = 57000;
-    public static final int deltaId = 58000;
+    public static final int deltaMakeId = 58000;
+    public static final int deltaAnalysId = 58500;
+    public static final int deltaUnMakeId = 58600;
     public static final int deltaResumInit = 59000;
     public static final int deltaAddPrefixIf = 60000;
     public static final int deltaAddPrefixDot = 61000;

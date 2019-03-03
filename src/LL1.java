@@ -15,12 +15,23 @@ public class LL1 {
     private int lastCalcVarTriad1 = -1;
     private int lastCalcVarTriad2 = -1;
     private String lastCalcVarTriadOper = "";
+    private boolean isMakeId = false;
 
     private int indexLastDoneVar = 0;
 
     private int getIdLastPerem() {
         for (Triad triad : triads) {
             if (triad.operand1.equals(lastId))
+                return triads.indexOf(triad);
+        }
+        return -1;
+    }
+
+    private int getIdLastPeremWithPrefex(String prefex) {
+        for (Triad triad : triads) {
+            String check = prefex + "." + lastId;
+            check = check.replaceAll("\0", "");
+            if (triad.operand1.replaceAll("\0", "").equals(check))
                 return triads.indexOf(triad);
         }
         return -1;
@@ -141,6 +152,23 @@ public class LL1 {
         pointer--;
     }
 
+    private int getIndexTriadSplit() {
+        try {
+            int id = getIdLastPeremWithPrefex(prefexPerem);
+            String pref = prefexPerem;
+            while (id == -1) {
+                String[] checkPref = pref.split("\\.");
+                pref = checkPref[0];
+                for (int i = 1; i < checkPref.length - 1; i++)
+                    pref += "." + checkPref[i];
+                id = getIdLastPeremWithPrefex(pref);
+            }
+            return id;
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
     public int LL1Analise(Scaner scaner) {
         int type, fl = 1, resCode = 1;
 
@@ -159,6 +187,8 @@ public class LL1 {
                     if (type == Constants.END)
                         fl = 0;
                     else {
+                        if (isMakeId)
+                            lastId += new String(lex).replaceAll("\0", "");
                         type = scaner.processScanner(lex);
 
 
@@ -179,22 +209,29 @@ public class LL1 {
 //                            countByte = "char";
 //                        }
                         if (type == Constants.ASSIGN) {
-                            triads.add(pointerTriad++, new Triad("=", String.valueOf(getIdLastPerem()) + ")", ""));
+                            if (!isMakeId)
+                                triads.add(pointerTriad++, new Triad("=", String.valueOf(getIdLastPerem()) + ")", ""));
+                            else {
+                                int id = getIndexTriadSplit();
+
+                                triads.add(pointerTriad++, new Triad("=", String.valueOf(id) + ")", ""));
+                            }
                             triads.add(pointerTriad++, new Triad("", "", ""));
                             //assignTriad = new Triad("=", String.valueOf(getIdLastPerem()), "");
                             indexLastDoneVar = -1;
                         }
                         if (type == Constants.ID) {
-                            lastId = prefexPerem + "." + new String(lex);
+                            if (!isMakeId)
+                                lastId = prefexPerem + "." + new String(lex).replaceAll("\0", "");
 
                             if (initPerem) {
                                 if (!countByte.equals("int") && !countByte.equals("char")) {
                                     String className = countByte;
                                     ArrayList<Triad> moreTriads = getTriadForClass(className);
                                     for (Triad triad : moreTriads)
-                                        triads.add(pointerTriad++, new Triad(triad.proc, prefexPerem + "." + new String(lex) + triad.operand1.substring(className.length()), ""));
+                                        triads.add(pointerTriad++, new Triad(triad.proc, prefexPerem + "." + new String(lex).replaceAll("\0", "") + triad.operand1.substring(className.length()), ""));
                                 }else {
-                                    triads.add(pointerTriad, new Triad(countByte, prefexPerem + "." + new String(lex), ""));
+                                    triads.add(pointerTriad, new Triad(countByte, prefexPerem + "." + new String(lex).replaceAll("\0", ""), ""));
                                     pointerTriad++;
                                 }
                             }
@@ -306,7 +343,7 @@ public class LL1 {
                             magazine[pointer++] = Constants.CHAR;
                         } else if (type == Constants.ID) {
                             initPerem = true;
-                            countByte = new String(lex);
+                            countByte = new String(lex).replaceAll("\0", "");
                             magazine[pointer++] = Constants.ID;
                         }
                         break;
@@ -399,9 +436,11 @@ public class LL1 {
                             magazine[pointer++] = Constants.deltaEndAssign;
                             magazine[pointer++] = Constants.COMMA;
                             magazine[pointer++] = Constants.netermEXPRESSION;
+                            magazine[pointer++] = Constants.deltaUnMakeId;
                             magazine[pointer++] = Constants.ASSIGN;
                             magazine[pointer++] = Constants.netermELEM_ARRAY;
                             magazine[pointer++] = Constants.ID;
+                            magazine[pointer++] = Constants.deltaMakeId;
                         }
                         break;
                     case Constants.netermIF:
@@ -650,9 +689,11 @@ public class LL1 {
                             magazine[pointer++] = Constants.ROUND_BRACE_OPEN;
                             magazine[pointer++] = Constants.deltaRoundBraceOpen;
                         } else if (type == Constants.ID) {
+
+                            magazine[pointer++] = Constants.deltaAnalysId;
                             magazine[pointer++] = Constants.netermELEM_ARRAY;
                             magazine[pointer++] = Constants.ID;
-                            magazine[pointer++] = Constants.deltaId;
+                            magazine[pointer++] = Constants.deltaMakeId;
                         } else if (type == Constants.TYPE_INT || type == Constants.TYPE_SINT ||
                                     type == Constants.TYPE_CHAR) {
                             magazine[pointer++] = type;
@@ -665,22 +706,41 @@ public class LL1 {
                         break;
                     case Constants.deltaNum:
                         if (triads.get(pointerTriad - 1).isOnleOperand2()) {
-                            triads.get(pointerTriad - 1).operand2 = new String(lex);
+                            triads.get(pointerTriad - 1).operand2 = new String(lex).replaceAll("\0", "");
                             indexLastDoneVar = pointerTriad - 1;
                         } else {
                             Triad triadNum = getEmptyTriad();
                             if (triadNum == null) {
                                 triadNum = getTriadWithoutOper2();
-                                triadNum.operand2 = new String(lex);
+                                triadNum.operand2 = new String(lex).replaceAll("\0", "");
                                 indexLastDoneVar = triads.indexOf(triadNum);
                             } else
-                                triadNum.operand1 = new String(lex);
+                                triadNum.operand1 = new String(lex).replaceAll("\0", "");
                         }
                         break;
-                    case Constants.deltaId:
-                        int indexTriad = getIndexTriadName(prefexPerem, new String(lex));
-                        if (indexTriad == -1)
-                            indexTriad = getIndexTriadName("global", new String(lex));
+
+                    case Constants.deltaMakeId:
+                        lastId = "";
+                        isMakeId = true;
+                        break;
+
+                    case Constants.deltaUnMakeId:
+                        lastId = "";
+                        isMakeId = false;
+                        break;
+
+                    case Constants.deltaAnalysId:
+                        isMakeId = false;
+                        int indexTriad = getIndexTriadName(prefexPerem, lastId);
+                        if (indexTriad == -1) {
+                            indexTriad = getIndexTriadName("global", new String(lex).replaceAll("\0", ""));
+                            if (indexTriad == -1)
+                                indexTriad = getIndexTriadName("global", lastId);
+                        }
+                        if (indexTriad == -1) {
+                            indexTriad = getIndexTriadSplit();
+                        }
+
                         if (triads.get(pointerTriad - 1).isOnleOperand2()) {
                             triads.get(pointerTriad - 1).operand2 = String.valueOf(indexTriad) + ")";
                             indexLastDoneVar = pointerTriad - 1;
@@ -697,9 +757,9 @@ public class LL1 {
                     case Constants.deltaOperation:
                         Triad triadOper1 = getOnleOper1Triad();
                         if (triadOper1 != null)
-                            triadOper1.proc = new String(lex);
+                            triadOper1.proc = new String(lex).replaceAll("\0", "");
                         else {
-                            triads.add(pointerTriad++, new Triad(new String(lex), String.valueOf(indexLastDoneVar) + ")", ""));
+                            triads.add(pointerTriad++, new Triad(new String(lex).replaceAll("\0", ""), String.valueOf(indexLastDoneVar) + ")", ""));
                         }
                         break;
                     case Constants.deltaRoundBraceClose:
@@ -735,7 +795,7 @@ public class LL1 {
                         break;
 
                     case Constants.deltaInitClass:
-                        prefexPerem = new String(lex);
+                        prefexPerem = new String(lex).replaceAll("\0", "");
                         break;
 
                     case Constants.deltaClearPrefix:

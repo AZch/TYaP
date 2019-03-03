@@ -1,8 +1,23 @@
 int bg = 5 * 2;
+
+class asd {
+    int aVar;
+    char bCh;
+    int ggg;
+};
+
+
 void main() {
+    asd m;
+    m.aVar = 45;
+
     if (5 + 15 > 0) {
         int gh = 7;
         int bh = 10 + gh;
+        if (m.aVar > m.ggg)
+            m.bCh = 32;
+        else
+            int mk = 56;
         if (gh > bh) {
             int pre = 5;
             pre = (32 * 3) + 84;
@@ -15,5 +30,5 @@ void main() {
     int a;
     a = 3 * ((4 + 5) - (7 / 9)) - (16 * 10) + 99;
     int b = 7 + a * 2, g = 11;
-    a = 5;
+    a = m.aVar;
 }
