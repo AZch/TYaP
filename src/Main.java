@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] argv) {
@@ -8,6 +9,8 @@ public class Main {
         int resAnalise = ll1.LL1Analise(scaner);
 //        PrecedenceAnalyz precedenceAnalyz = new PrecedenceAnalyz();
 //        int resAnalise = precedenceAnalyz.analyz(scaner);
+        Optimization optimization = new Optimization();
+        ArrayList<Triad> triads = optimization.make(ll1.triads);
         int count = 0;
         FileWriter writer = null;
         try {
@@ -15,6 +18,17 @@ public class Main {
 
             for (Triad triad : ll1.triads) {
                 writer.write(String.valueOf(count) + ") " + triad.proc + " " + triad.operand1 + " " + triad.operand2 + "\n");
+                count++;
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer = new FileWriter("/home/az/IdeaProjects/TYaP/src/outputOpt.txt");
+
+            for (Triad triad : triads) {
+                writer.write(String.valueOf(triad.index) + ") " + triad.proc + " " + triad.operand1 + " " + triad.operand2 + "\n");
                 count++;
             }
             writer.close();
